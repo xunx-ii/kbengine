@@ -7,6 +7,7 @@
 #include "KBDebug.h"
 #include "Interfaces.h"
 #include "KBEngine.h"
+#include "IPAddressAsyncResolve.h"
 
 namespace KBEngine
 {
@@ -84,7 +85,7 @@ bool NetworkInterfaceBase::connectTo(const FString& addr, uint16 port, Interface
 
 	if (!FIPv4Address::Parse(addr, ip))
 	{
-		auto resolveInfo = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->GetHostByName(TCHAR_TO_ANSI(*addr));
+		FResolveInfo* resolveInfo = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->GetHostByName(TCHAR_TO_ANSI(*addr));
 		while (!resolveInfo->IsComplete());
 
 		if (resolveInfo->GetErrorCode() != 0)
