@@ -118,7 +118,7 @@ std::string ClientSDKUE4::typeToType(const std::string& type)
 	}
 	else if (type == "VECTOR3")
 	{
-		return "FVector";
+		return "FVector3f";
 	}
 	else if (type == "VECTOR4")
 	{
@@ -131,7 +131,7 @@ std::string ClientSDKUE4::typeToType(const std::string& type)
 	}
 	else if (type == "VECTOR3")
 	{
-		return "FVector";
+		return "FVector3f";
 	}
 	else if (type == "VECTOR4")
 	{
@@ -1725,7 +1725,7 @@ bool ClientSDKUE4::writeEntityDefsModuleInitScript_PropertyDescr(ScriptDefModule
 	{
 		std::string readName = typeToType(datatype2nativetype(typeID));
 
-		if (readName == "FVector2D" || readName == "FVector" || readName == "FVector4")
+		if (readName == "FVector2D" || readName == "FVector3f" || readName == "FVector4")
 		{
 			fileBody() += fmt::format("\tKBVar* p{}_{}_defval = new KBVar({}());\n", pScriptDefModule->getName(),
 				pDescr->getName(), readName);
@@ -2091,9 +2091,9 @@ bool ClientSDKUE4::writeTypeItemType_VECTOR2(const std::string& itemName, const 
 bool ClientSDKUE4::writeTypeItemType_VECTOR3(const std::string& itemName, const std::string& childItemName)
 {
 #ifdef CLIENT_NO_FLOAT
-	fileBody() += fmt::format("\tFVector {};\n", itemName);
+	fileBody() += fmt::format("\tFVector3f {};\n", itemName);
 #else
-	fileBody() += fmt::format("\tFVector {};\n", itemName);
+	fileBody() += fmt::format("\tFVector3f {};\n", itemName);
 #endif
 
 	initBody_ += fmt::format("\t{}({}),\n", itemName, "");
@@ -3013,9 +3013,9 @@ bool ClientSDKUE4::writeEntityProcessMessagesMethod(ScriptDefModule* pEntityScri
 				std::string("direction") == pPropertyDescription->getName())
 			{
 #ifdef CLIENT_NO_FLOAT
-				typestr = "FVector";
+				typestr = "FVector3f";
 #else
-				typestr = "FVector";
+				typestr = "FVector3f";
 #endif
 			}
 			else
@@ -3123,9 +3123,9 @@ bool ClientSDKUE4::writeEntityProcessMessagesMethod(ScriptDefModule* pEntityScri
 			std::string("direction") == pPropertyDescription->getName())
 		{
 #ifdef CLIENT_NO_FLOAT
-			typestr = "FVector";
+			typestr = "FVector3f";
 #else
-			typestr = "FVector";
+			typestr = "FVector3f";
 #endif
 		}
 		else
@@ -3450,9 +3450,9 @@ bool ClientSDKUE4::writeEntityProperty_VECTOR3(ScriptDefModule* pEntityScriptDef
 	ScriptDefModule* pCurrScriptDefModule, PropertyDescription* pPropertyDescription)
 {
 #ifdef CLIENT_NO_FLOAT
-	fileBody() += fmt::format("\tFVector {};\n", pPropertyDescription->getName());
+	fileBody() += fmt::format("\tFVector3f {};\n", pPropertyDescription->getName());
 #else
-	fileBody() += fmt::format("\tFVector {};\n", pPropertyDescription->getName());
+	fileBody() += fmt::format("\tFVector3f {};\n", pPropertyDescription->getName());
 #endif
 
 	initBody_ += fmt::format("\t{}(),\n", pPropertyDescription->getName());
